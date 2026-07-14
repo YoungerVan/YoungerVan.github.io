@@ -90,7 +90,7 @@ window.addEventListener('click', (e) => {
 });
 
 const FLOW_SCALE = 0.0016;
-const FLOW_SPEED = 0.05;
+const FLOW_SPEED = 0.022;     // 流场驱动力（越小粒子越慢）
 const ATTRACT_RADIUS = 180;  // 悬停吸引半径
 const SPEED_SPAWN = 22;      // 触发喷发的鼠标速度阈值
 
@@ -165,9 +165,9 @@ function draw() {
       }
     }
 
-    // 阻尼 + 位移
-    p.vx *= 0.94;
-    p.vy *= 0.94;
+    // 阻尼 + 位移（阻尼略大，移动更平缓）
+    p.vx *= 0.9;
+    p.vy *= 0.9;
     p.x += p.vx;
     p.y += p.vy;
 
