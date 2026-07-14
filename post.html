@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>文章 · Younger.Van</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- 代码高亮主题 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css" />
+  <!-- MathJax 数学公式 -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+  <canvas id="starfield"></canvas>
+
+  <nav class="topnav">
+    <div class="brand">Younger.Van</div>
+    <div class="tabs">
+      <a href="index.html">主页</a>
+      <a href="blog.html" class="active">博客</a>
+      <a href="thoughts.html">想法</a>
+    </div>
+  </nav>
+
+  <article class="article">
+    <a href="blog.html" class="back">← 返回博客</a>
+    <div id="content" class="markdown-body">
+      <p style="color:#888">加载中…</p>
+    </div>
+  </article>
+
+  <!-- Markdown 解析 & 代码高亮 -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+  <script src="script.js"></script>
+  <script>
+    (function () {
+      // 取 URL 中的 ?p=文件名
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('p') || 'rl-evolution';
+      const mdPath = 'posts/' + slug.replace(/[^a-zA-Z0-9_-]/g, '') + '.md';
+      const contentEl = document.getElementById('content');
+
+      fetch(mdPath)
+        .then((res) => {
+          if (!res.ok) throw new Error('文章未找到');
+          return res.text();
+        })
+        .then((md) => {
+          // 从正文首个 # 标题提取页面标题（可选）
+          contentEl.innerHTML = marked.parse(md);
+
+          // 代码高亮
+          document.querySelectorAll('#content pre code').forEach((block) => {
+            try { hljs.highlightElement(block); } catch (e) {}
+          });
+
+          // 触发 MathJax 渲染
+          if (window.MathJax && window.MathJax.typesetPromise) {
+            window.MathJax.typesetPromise([contentEl]);
+          }
+        })
+        .catch((err) => {
+          contentEl.innerHTML = '<p style="color:#888">加载失败：' + err.message +
+            '。<br/>提示：本地直接双击打开 html 会因浏览器安全策略无法 fetch，请用本地服务器或部署到 GitHub Pages 后访问。</p>';
+        });
+    })();
+  </script>
+</body>
+</html>
