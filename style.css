@@ -80,40 +80,102 @@ body {
 }
 
 /* 左侧 */
-.sidebar { position: sticky; top: 6rem; }
+.sidebar {
+  position: sticky;
+  top: 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+/* 圆形头像 */
 .avatar {
-  width: 100%;
-  max-width: 220px;
-  aspect-ratio: 1 / 1;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
-  border-radius: 10px;
-  border: 1px solid var(--line);
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  padding: 4px;
   display: block;
-  margin-bottom: 1.3rem;
-  filter: grayscale(0.15);
+  margin-bottom: 1.2rem;
+  transition: transform 0.4s ease, border-color 0.4s ease;
+}
+.avatar:hover {
+  transform: scale(1.04);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 .name {
-  font-size: 1.5rem;
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.6rem;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 0.2rem;
+  line-height: 1.2;
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.5px;
 }
-.role { color: var(--text); font-size: 0.98rem; }
-.org { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 1.3rem; }
+.role {
+  color: var(--text);
+  font-size: 0.9rem;
+}
+.org-inline { color: var(--text-dim); }
 
-.contact { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+/* 性格标签 */
+.tags {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin: 0.9rem 0;
+}
+.tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.2rem 0.7rem;
+  background: rgba(255, 255, 255, 0.04);
+  transition: 0.25s;
+}
+.tag:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+
+/* 简介 */
+.sidebar-bio {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  margin-bottom: 1.4rem;
+  max-width: 220px;
+}
+
+/* 信息与链接列表 */
+.contact {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  width: 100%;
+  align-items: flex-start;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+}
+.contact li,
 .contact a {
   display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
+  align-items: flex-start;
+  gap: 0.65rem;
   color: var(--text-dim);
   text-decoration: none;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
   transition: color 0.25s;
-  width: fit-content;
+  text-align: left;
 }
-.contact a svg { flex-shrink: 0; }
+.contact svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
 .contact a:hover { color: #fff; }
+.contact-static { cursor: default; }
 
 /* 右侧 */
 .content { padding-top: 0.2rem; }
@@ -141,35 +203,52 @@ body {
 /* ===== 自我描述特效 ===== */
 .intro-block { border-bottom: 1px solid var(--line); }
 .intro-text p {
-  font-size: 1.15rem;
-  line-height: 1.9;
-  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--text-dim);
   animation: fadeUp 1s ease both;
+  margin: 0.55rem 0;
+}
+.intro-text .intro-hi {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.9rem;
 }
 .intro-text .intro-sub {
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.9rem;
-  margin-top: 0.8rem;
+  margin-top: 1rem;
   animation-delay: 0.3s;
 }
 
-/* 高亮词：悬停下划线扫过 */
+/* 高亮词：渐变下划线 + 悬停发光脉冲 */
 .hl-word {
   color: #fff;
   font-weight: 600;
   position: relative;
   cursor: default;
+  transition: text-shadow 0.3s ease, color 0.3s ease;
 }
 .hl-word::after {
   content: '';
   position: absolute;
   left: 0; bottom: -2px;
   width: 100%; height: 1px;
-  background: #fff;
+  background: linear-gradient(90deg, transparent, #fff, transparent);
   transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s ease;
+  transform-origin: center;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
+.hl-word:hover { text-shadow: 0 0 12px rgba(255, 255, 255, 0.6); }
 .hl-word:hover::after { transform: scaleX(1); }
+/* 悬停发光脉冲 */
+.hl-word.pulse { animation: wordPulse 0.6s ease; }
+@keyframes wordPulse {
+  0%   { text-shadow: 0 0 0 rgba(255,255,255,0); }
+  40%  { text-shadow: 0 0 18px rgba(255,255,255,0.85); }
+  100% { text-shadow: 0 0 12px rgba(255,255,255,0.6); }
+}
 
 /* 名字：银色流光 */
 .shine {
@@ -258,6 +337,16 @@ body {
 .markdown-body ul, .markdown-body ol { margin: 1rem 0 1rem 1.5rem; }
 .markdown-body li { margin: 0.4rem 0; }
 .markdown-body img { max-width: 100%; border-radius: 8px; margin: 1rem 0; border: 1px solid var(--line); }
+.img-fallback {
+  margin: 1rem 0;
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+}
 .markdown-body blockquote {
   border-left: 3px solid var(--text-dim);
   padding: 0.3rem 1rem;

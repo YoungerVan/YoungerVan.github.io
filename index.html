@@ -7,8 +7,8 @@
   <meta name="description" content="Fan Hongyang - AI Algorithm Engineer" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=6" />
 </head>
 <body>
   <canvas id="starfield"></canvas>
@@ -29,20 +29,42 @@
     <aside class="sidebar">
       <img class="avatar" src="d3f9b056e8b50e89d4e10cb1bffd924d.jpg" alt="Fan Hongyang" />
       <h1 class="name">Fan Hongyang</h1>
-      <p class="role">AI Algorithm Engineer</p>
-      <p class="org">@ Tencent</p>
+      <p class="role">AI Algorithm Engineer <span class="org-inline">@ Tencent</span></p>
 
+      <!-- 性格标签 -->
+      <div class="tags">
+        <span class="tag">ENTP</span>
+        <span class="tag">狮子座</span>
+      </div>
+
+      <!-- 自我简介 -->
+      <p class="sidebar-bio">
+        白天训练模型，晚上被模型训练。<br />
+        Bug 是我写的，但修 Bug 的是明天的我。🐧
+      </p>
+
+      <!-- 信息与链接 -->
       <ul class="contact">
+        <li class="contact-static">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>米花町五丁目39番地 毛利侦探事务所</span>
+        </li>
         <li>
           <a href="https://github.com/YoungerVan" target="_blank" rel="noopener">
-            <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
-            <span>GitHub</span>
+            <svg viewBox="0 0 16 16" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+            <span>github</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://space.bilibili.com/26045497?spm_id_from=333.1007.0.0" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M18.223 3.086a1.25 1.25 0 0 1 0 1.768L17.08 6h1.17A3.75 3.75 0 0 1 22 9.75v7.5A3.75 3.75 0 0 1 18.25 21H5.75A3.75 3.75 0 0 1 2 17.25v-7.5A3.75 3.75 0 0 1 5.75 6h1.17L5.777 4.854a1.25 1.25 0 1 1 1.768-1.768L9.545 5.09c.181.181.32.4.402.638h4.106c.083-.238.222-.457.403-.638l2-2.004a1.25 1.25 0 0 1 1.767 0ZM5.75 8.5a1.25 1.25 0 0 0-1.25 1.25v7.5c0 .69.56 1.25 1.25 1.25h12.5c.69 0 1.25-.56 1.25-1.25v-7.5c0-.69-.56-1.25-1.25-1.25H5.75ZM8 11.5a1 1 0 0 1 1 1v1.5a1 1 0 1 1-2 0v-1.5a1 1 0 0 1 1-1Zm8 0a1 1 0 0 1 1 1v1.5a1 1 0 1 1-2 0v-1.5a1 1 0 0 1 1-1Z"/></svg>
+            <span>bilibili</span>
           </a>
         </li>
         <li>
           <a href="mailto:coolboyyounger@gmail.com">
-            <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M1.5 3h13c.28 0 .5.22.5.5v9c0 .28-.22.5-.5.5h-13a.5.5 0 0 1-.5-.5v-9c0-.28.22-.5.5-.5Zm.5 1.2v.32l6 3.6 6-3.6V4.2l-6 3.6-6-3.6Zm12 1.68-4.3 2.58L14 11.3V5.88ZM2 11.3l4.3-2.54L2 5.88v5.42Z"/></svg>
-            <span>Email</span>
+            <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="#4285F4" d="M22 6.14v11.72c0 .63-.51 1.14-1.14 1.14H19V8.4l-7 5.25L5 8.4v10.6H3.14C2.51 19 2 18.49 2 17.86V6.14C2 5.51 2.51 5 3.14 5H4l8 6 8-6h.86c.63 0 1.14.51 1.14 1.14Z"/><path fill="#EA4335" d="M4 5l8 6 8-6h-.86c-.2 0-.4.06-.57.17L12 10 5.43 5.17A1.14 1.14 0 0 0 4.86 5H4Z"/></svg>
+            <span>gmail</span>
           </a>
         </li>
       </ul>
@@ -50,16 +72,31 @@
 
     <!-- 右侧：经历 -->
     <section class="content">
-      <!-- 自我描述（带特效占位） -->
+      <!-- 自我描述（带特效） -->
       <div class="block intro-block">
         <div class="intro-text">
+          <p class="intro-hi">Hi, I'm <span class="shine">Fan&nbsp;Hongyang</span> 👋</p>
           <p>
-            你好，我是 <span class="shine">Fan Hongyang</span>。
-            一个在 <span class="hl-word">代码</span> 与 <span class="hl-word">旋律</span> 之间寻找灵感的
-            <span class="hl-word">算法工程师</span>。
+            一名 <span class="hl-word">AI 算法工程师</span>，目前就职于
+            <span class="hl-word">腾讯</span>，硕士毕业于
+            <span class="hl-word">南京大学</span> 管理科学专业。日常与
+            <span class="hl-word">大语言模型</span>、<span class="hl-word">强化学习</span> 和
+            <span class="hl-word">推理优化</span> 打交道，试图让机器更聪明一点，也顺便让自己更秃一点。
+          </p>
+          <p>
+            我的编程启蒙始于小学——当年为了给游戏角色改属性，我第一次打开了记事本，结果把存档改崩了，从此立志要搞懂"这堆字母到底在干什么"。多年后我依然在跟一堆字母较劲，只不过这次它们叫 <span class="hl-word">Transformer</span>，而且崩的不再是存档，是我的显存。
+          </p>
+          <p>
+            读研期间，我一度以为自己会成为运筹学家，直到某天深夜调参时顿悟：所谓"最优化"，本质就是不断告诉模型"你还能再努力一点"——这话我导师也常对我说。于是我把这份"被 PUA 的智慧"传承给了神经网络，它们学得比我快，也比我听话。
+          </p>
+          <p>
+            工作以后，我主要负责教大模型"好好说话"。为此我读过的 paper 摞起来大概有我高，跑过的实验烧掉的电费大概能供一个小镇过冬。同事说我最大的贡献是让 GPU 集群保持温暖，我觉得这是对一个算法工程师最高的褒奖。
+          </p>
+          <p>
+            工作之外，我是个 <span class="hl-word">ENTP</span>，典型的"点子很多、执行看心情"型选手；作为一个 <span class="hl-word">狮子座</span>，我坚信自己迟早会火——虽然目前只有代码在 run 的时候是热的。我热爱音乐，写不出 bug 的夜晚就写不出旋律，反之亦然。
           </p>
           <p class="intro-sub">
-            <span class="typing-line">// 这里是一段自我描述占位，你可以随时替换成自己的话 ✦</span>
+            <span class="typing-line">代码是我的语言，音乐是我的休止符 ♪</span>
           </p>
         </div>
       </div>
@@ -77,6 +114,33 @@
 
   </main>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=7"></script>
+  <script>
+    // 自我介绍：逐段渐入
+    (function () {
+      const paras = document.querySelectorAll('.intro-text > p');
+      paras.forEach((p, i) => {
+        p.style.opacity = '0';
+        p.style.transform = 'translateY(16px)';
+        p.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+        p.style.transitionDelay = (0.15 + i * 0.18) + 's';
+      });
+      requestAnimationFrame(() => {
+        paras.forEach((p) => {
+          p.style.opacity = '';
+          p.style.transform = '';
+        });
+      });
+
+      // 关键词：鼠标移入时短暂发光脉冲
+      document.querySelectorAll('.hl-word').forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+          el.classList.remove('pulse');
+          void el.offsetWidth; // 重置动画
+          el.classList.add('pulse');
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

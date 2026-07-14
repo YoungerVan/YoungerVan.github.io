@@ -56,12 +56,22 @@
           return res.text();
         })
         .then((md) => {
-          // 从正文首个 # 标题提取页面标题（可选）
           contentEl.innerHTML = marked.parse(md);
 
           // 代码高亮
           document.querySelectorAll('#content pre code').forEach((block) => {
             try { hljs.highlightElement(block); } catch (e) {}
+          });
+
+          // 图片加载失败处理：隐藏裂图，替换为占位提示
+          document.querySelectorAll('#content img').forEach((img) => {
+            img.loading = 'lazy';
+            img.addEventListener('error', function () {
+              const ph = document.createElement('div');
+              ph.className = 'img-fallback';
+              ph.textContent = '🖼 图片暂不可用（来自私有图床）';
+              this.replaceWith(ph);
+            });
           });
 
           // 触发 MathJax 渲染
