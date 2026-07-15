@@ -8,7 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Dancing+Script:wght@600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=12" />
+  <link rel="stylesheet" href="style.css?v=13" />
+  <!-- GoatCounter 访问统计 -->
+  <script data-goatcounter="https://conan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
   <canvas id="starfield"></canvas>
@@ -157,50 +159,56 @@
         });
       });
 
-      // ===== 访问计数器 =====
+      // ===== 访问计数器（GoatCounter 真实统计） =====
       (function () {
-        var key = 'visit_count';
-        var count = parseInt(localStorage.getItem(key) || '0', 10) + 1;
-        localStorage.setItem(key, String(count));
-
-        // 趣味文案随次数变化
-        var descs = [
-          '你是第 {n} 位到访的碳基生物 🐧',
-          '又来了？第 {n} 次了，是不是没别的事做了 😏',
-          '第 {n} 次光临，要不要考虑把这里设为主页 🏠',
-          '第 {n} 次了，你比我的 GPU 还勤奋 🔥',
-          '第 {n} 次！说吧，这次又遇到什么 bug 了 🐛',
-          '第 {n} 次，我都要怀疑你是不是个爬虫脚本了 🤖',
-          '第 {n} 次！你赢了，这里没别人了，就咱俩 🫂',
-        ];
-        var idx = Math.min(descs.length - 1, count - 1);
-        var desc = descs[idx].replace('{n}', count);
-
         var numEl = document.getElementById('visitor-count');
         var descEl = document.getElementById('visitor-desc');
-        if (descEl) descEl.textContent = desc;
+        if (!numEl) return;
 
-        // 数字翻滚动画
-        if (numEl) {
-          var display = 0;
-          var target = count;
-          var steps = 30;
-          var inc = Math.ceil(target / steps);
-          var step = 0;
-          var timer = setInterval(function () {
-            step++;
-            display += inc;
-            if (display >= target || step >= steps) {
-              display = target;
-              clearInterval(timer);
-            }
-            numEl.textContent = display;
-            // 每次翻滚时短暂闪一下
-            numEl.classList.remove('flash');
-            void numEl.offsetWidth;
-            numEl.classList.add('flash');
-          }, 40);
-        }
+        var labelEl = document.querySelector('.visitor-label');
+
+        // 先显示加载中
+        labelEl.textContent = '// 正在扫描访客信号…';
+
+        // 调用 GoatCounter 公开 API 获取总访问量
+        fetch('https://conan.goatcounter.com/counter/', { credentials: 'omit' })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            // data.count: 总 PV
+            var count = data.count || 0;
+            var unique = data.total_unique || 0;
+
+            labelEl.textContent = '// 检测到生命体信号';
+            descEl.textContent = '本站累计 ' + count + ' 次访问，来自 ' + unique + ' 位访客 🐧';
+
+            // 数字翻滚动画
+            var display = 0;
+            var target = count;
+            var steps = Math.min(40, Math.max(10, target));
+            var inc = Math.ceil(target / steps) || 1;
+            var step = 0;
+            var timer = setInterval(function () {
+              step++;
+              display += inc;
+              if (display >= target || step >= steps) {
+                display = target;
+                clearInterval(timer);
+              }
+              numEl.textContent = display;
+              numEl.classList.remove('flash');
+              void numEl.offsetWidth;
+              numEl.classList.add('flash');
+            }, 40);
+          })
+          .catch(function () {
+            // API 失败时回退到 localStorage
+            var key = 'visit_count';
+            var count = parseInt(localStorage.getItem(key) || '0', 10) + 1;
+            localStorage.setItem(key, String(count));
+            labelEl.textContent = '// 检测到生命体信号（离线模式）';
+            descEl.textContent = '你是第 ' + count + ' 位到访的碳基生物 🐧';
+            numEl.textContent = count;
+          });
       })();
     })();
   </script>
