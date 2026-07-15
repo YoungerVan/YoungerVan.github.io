@@ -86,13 +86,14 @@ window.addEventListener('mouseleave', () => {
   mouse.speed = 0;
 });
 window.addEventListener('click', (e) => {
-  shockwaves.push({ x: e.clientX, y: e.clientY, r: 0, max: 300, alpha: 0.6 });
+  shockwaves.push({ x: e.clientX, y: e.clientY, r: 0, max: 340, alpha: 0.9 });
 });
 
 const FLOW_SCALE = 0.0016;
-const FLOW_SPEED = 0.022;     // 流场驱动力（越小粒子越慢）
+const FLOW_SPEED = 0.012;     // 流场驱动力（越小粒子越慢）
 const ATTRACT_RADIUS = 180;  // 悬停吸引半径
 const SPEED_SPAWN = 22;      // 触发喷发的鼠标速度阈值
+const DAMPING = 0.97;        // 阻尼（越接近1衰减越慢，弹开后飞得越久越远）
 
 function spawnFromMouse() {
   // 沿鼠标位置喷发新粒子（速度越快喷越多）
@@ -137,10 +138,13 @@ function draw() {
   for (let i = particles.length - 1; i >= 0; i--) {
     const p = particles[i];
 
-    // 流场驱动
-    const angle = noise2(p.x * FLOW_SCALE, p.y * FLOW_SCALE + time) * Math.PI * 2;
-    p.vx += Math.cos(angle) * FLOW_SPEED;
-    p.vy += Math.sin(angle) * FLOW_SPEED;
+    // 流场驱动：仅当粒子较慢时施加，避免低阻尼下持续加速失控
+    const sp0 = Math.hypot(p.vx, p.vy);
+    if (sp0 < 0.6) {
+      const angle = noise2(p.x * FLOW_SCALE, p.y * FLOW_SCALE + time) * Math.PI * 2;
+      p.vx += Math.cos(angle) * FLOW_SPEED;
+      p.vy += Math.sin(angle) * FLOW_SPEED;
+    }
 
     // 悬停吸引（靠拢鼠标）
     if (mouse.active) {
@@ -153,21 +157,21 @@ function draw() {
       }
     }
 
-    // 点击脉冲弹开
+    // 点击脉冲弹开（更大冲击力 + 更宽作用环）
     for (const s of shockwaves) {
       const dx = p.x - s.x, dy = p.y - s.y;
       const dist = Math.hypot(dx, dy);
       const ring = Math.abs(dist - s.r);
-      if (ring < 50 && dist > 0.1) {
-        const force = (1 - ring / 50) * s.alpha * 4;
+      if (ring < 70 && dist > 0.1) {
+        const force = (1 - ring / 70) * s.alpha * 14;
         p.vx += (dx / dist) * force;
         p.vy += (dy / dist) * force;
       }
     }
 
-    // 阻尼 + 位移（阻尼略大，移动更平缓）
-    p.vx *= 0.9;
-    p.vy *= 0.9;
+    // 阻尼 + 位移（阻尼低，弹开后能迅速飞离）
+    p.vx *= DAMPING;
+    p.vy *= DAMPING;
     p.x += p.vx;
     p.y += p.vy;
 
@@ -218,8 +222,8 @@ function draw() {
   // 点击脉冲环
   for (let k = shockwaves.length - 1; k >= 0; k--) {
     const s = shockwaves[k];
-    s.r += 7;
-    s.alpha *= 0.95;
+    s.r += 11;
+    s.alpha *= 0.955;
     ctx.beginPath();
     ctx.strokeStyle = `rgba(255,255,255,${s.alpha})`;
     ctx.lineWidth = 1.2;

@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=9" />
   <!-- 代码高亮主题 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css" />
   <!-- MathJax 数学公式 -->
@@ -47,7 +47,9 @@
       // 取 URL 中的 ?p=文件名
       const params = new URLSearchParams(window.location.search);
       const slug = params.get('p') || 'rl-evolution';
-      const mdPath = 'posts/' + slug.replace(/[^a-zA-Z0-9_-]/g, '') + '.md';
+      const safeSlug = slug.replace(/[^a-zA-Z0-9_-]/g, '');
+      const baseDir = 'posts/';
+      const mdPath = baseDir + safeSlug + '.md';
       const contentEl = document.getElementById('content');
 
       fetch(mdPath)
@@ -57,6 +59,15 @@
         })
         .then((md) => {
           contentEl.innerHTML = marked.parse(md);
+
+          // 修正相对图片路径：md 中的相对路径应相对 posts/ 目录
+          document.querySelectorAll('#content img').forEach((img) => {
+            const raw = img.getAttribute('src') || '';
+            const isAbsolute = /^(https?:)?\/\//i.test(raw) || raw.startsWith('/') || raw.startsWith('data:');
+            if (!isAbsolute) {
+              img.setAttribute('src', baseDir + raw);
+            }
+          });
 
           // 代码高亮
           document.querySelectorAll('#content pre code').forEach((block) => {
