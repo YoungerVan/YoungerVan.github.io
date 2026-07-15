@@ -462,6 +462,7 @@ body {
 }
 .toc-link:hover { color: #fff; }
 .toc-link.toc-h2 { padding-left: 1.4rem; margin-left: -1.4rem; font-size: 0.75rem; }
+.toc-link.toc-h3 { padding-left: 2.1rem; margin-left: -2.1rem; font-size: 0.72rem; opacity: 0.75; }
 .toc-link.active {
   color: #fff;
   border-left-color: #fff;
