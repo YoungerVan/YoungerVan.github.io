@@ -7,8 +7,8 @@
   <meta name="description" content="Fan Hongyang - AI Algorithm Engineer" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=6" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Dancing+Script:wght@600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=12" />
 </head>
 <body>
   <canvas id="starfield"></canvas>
@@ -110,11 +110,27 @@
         <h2>项目经历</h2>
         <p class="placeholder">待补充…</p>
       </div>
+
+      <!-- 访问计数器 -->
+      <div class="block visitor-block">
+        <div class="visitor-card">
+          <div class="visitor-orb">
+            <div class="orb-ring"></div>
+            <div class="orb-core"></div>
+            <div class="orb-dot"></div>
+          </div>
+          <div class="visitor-text">
+            <p class="visitor-label">// 检测到生命体信号</p>
+            <div class="visitor-number" id="visitor-count">0</div>
+            <p class="visitor-desc" id="visitor-desc">你是第 1 位到访的碳基生物 🐧</p>
+          </div>
+        </div>
+      </div>
     </section>
 
   </main>
 
-  <script src="script.js?v=9"></script>
+  <script src="script.js?v=10"></script>
   <script>
     // 自我介绍：逐段渐入
     (function () {
@@ -140,6 +156,52 @@
           el.classList.add('pulse');
         });
       });
+
+      // ===== 访问计数器 =====
+      (function () {
+        var key = 'visit_count';
+        var count = parseInt(localStorage.getItem(key) || '0', 10) + 1;
+        localStorage.setItem(key, String(count));
+
+        // 趣味文案随次数变化
+        var descs = [
+          '你是第 {n} 位到访的碳基生物 🐧',
+          '又来了？第 {n} 次了，是不是没别的事做了 😏',
+          '第 {n} 次光临，要不要考虑把这里设为主页 🏠',
+          '第 {n} 次了，你比我的 GPU 还勤奋 🔥',
+          '第 {n} 次！说吧，这次又遇到什么 bug 了 🐛',
+          '第 {n} 次，我都要怀疑你是不是个爬虫脚本了 🤖',
+          '第 {n} 次！你赢了，这里没别人了，就咱俩 🫂',
+        ];
+        var idx = Math.min(descs.length - 1, count - 1);
+        var desc = descs[idx].replace('{n}', count);
+
+        var numEl = document.getElementById('visitor-count');
+        var descEl = document.getElementById('visitor-desc');
+        if (descEl) descEl.textContent = desc;
+
+        // 数字翻滚动画
+        if (numEl) {
+          var display = 0;
+          var target = count;
+          var steps = 30;
+          var inc = Math.ceil(target / steps);
+          var step = 0;
+          var timer = setInterval(function () {
+            step++;
+            display += inc;
+            if (display >= target || step >= steps) {
+              display = target;
+              clearInterval(timer);
+            }
+            numEl.textContent = display;
+            // 每次翻滚时短暂闪一下
+            numEl.classList.remove('flash');
+            void numEl.offsetWidth;
+            numEl.classList.add('flash');
+          }, 40);
+        }
+      })();
     })();
   </script>
 </body>

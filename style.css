@@ -384,6 +384,96 @@ body {
 .markdown-body th { background: rgba(255,255,255,0.04); color: #fff; }
 .markdown-body hr { border: none; border-top: 1px solid var(--line); margin: 2rem 0; }
 
+/* ===== 访问计数器 ===== */
+.visitor-block { border-bottom: none; }
+.visitor-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.8rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+/* 卡片右上角微光 */
+.visitor-card::before {
+  content: '';
+  position: absolute;
+  top: -40%; right: -10%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,255,255,0.04), transparent 70%);
+  pointer-events: none;
+}
+
+/* 脉冲光环 */
+.visitor-orb {
+  position: relative;
+  width: 56px; height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.orb-ring {
+  position: absolute;
+  width: 100%; height: 100%;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: orbPulse 2.5s ease-out infinite;
+}
+.orb-core {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff, #aaa);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+}
+.orb-dot {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  top: 4px; right: 6px;
+  animation: orbBlink 1.5s ease-in-out infinite;
+}
+@keyframes orbPulse {
+  0%   { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+@keyframes orbBlink {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 1; box-shadow: 0 0 8px rgba(255,255,255,0.8); }
+}
+
+.visitor-text { flex: 1; }
+.visitor-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-bottom: 0.2rem;
+}
+.visitor-number {
+  font-family: 'Orbitron', 'JetBrains Mono', monospace;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+.visitor-number.flash {
+  animation: numFlash 0.12s ease;
+}
+@keyframes numFlash {
+  0%   { text-shadow: 0 0 30px rgba(255,255,255,0.9); transform: scale(1.04); }
+  100% { text-shadow: 0 0 20px rgba(255,255,255,0.3); transform: scale(1); }
+}
+.visitor-desc {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 0.2rem;
+}
+
 /* ===== 分页（博客 / 想法） ===== */
 .page {
   max-width: 720px;
