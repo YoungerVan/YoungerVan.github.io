@@ -497,6 +497,24 @@ body {
   opacity: 0.7;
 }
 
+/* ===== 想法列表 ===== */
+.thoughts-list { display: flex; flex-direction: column; gap: 2rem; }
+.thought {
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition: border-color 0.25s, transform 0.25s;
+}
+.thought:hover { border-color: rgba(255, 255, 255, 0.25); transform: translateX(4px); }
+.thought-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+.thought-text { font-size: 1rem; color: var(--text); line-height: 1.8; }
+
 /* ===== 响应式 ===== */
 @media (max-width: 760px) {
   .topnav { padding: 1rem 1.3rem; }
