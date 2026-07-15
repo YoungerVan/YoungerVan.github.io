@@ -159,32 +159,42 @@
         });
       });
 
-      // ===== 访问计数器（GoatCounter 真实统计） =====
+      // ===== 访问计数器（全设备共享，使用 counterapi.dev） =====
       (function () {
         var numEl = document.getElementById('visitor-count');
         var descEl = document.getElementById('visitor-desc');
+        var labelEl = document.querySelector('.visitor-label');
         if (!numEl) return;
 
-        var labelEl = document.querySelector('.visitor-label');
-
-        // 先显示加载中
         labelEl.textContent = '// 正在扫描访客信号…';
 
-        // 调用 GoatCounter 公开 API 获取总访问量
-        fetch('https://conan.goatcounter.com/counter/', { credentials: 'omit' })
+        // 命名空间 + key 唯一标识你的计数器
+        var ns = 'youngervan.github.io';
+        var key = 'homepage-views';
+        var url = 'https://api.counterapi.dev/v1/' + ns + '/' + key + '/up';
+
+        fetch(url)
           .then(function (r) { return r.json(); })
           .then(function (data) {
-            // data.count: 总 PV
-            var count = data.count || 0;
-            var unique = data.total_unique || 0;
+            // counterapi 返回 { count: N }
+            var count = (data && data.count) || 0;
 
             labelEl.textContent = '// 检测到生命体信号';
-            descEl.textContent = '本站累计 ' + count + ' 次访问，来自 ' + unique + ' 位访客 🐧';
+
+            // 趣味文案
+            var descs = [
+              '你是第 ' + count + ' 位到访的碳基生物 🐧',
+              '第 ' + count + ' 次了，你比我的 GPU 还勤奋 🔥',
+              '第 ' + count + ' 次！说吧，这次又遇到什么 bug 了 🐛',
+              '第 ' + count + ' 次，我都要怀疑你是不是个爬虫脚本了 🤖',
+              '第 ' + count + ' 次！你赢了，这里没别人了，就咱俩 🫂',
+            ];
+            descEl.textContent = descs[Math.min(descs.length - 1, Math.floor((count - 1) / 5))] || descs[descs.length - 1];
 
             // 数字翻滚动画
             var display = 0;
             var target = count;
-            var steps = Math.min(40, Math.max(10, target));
+            var steps = Math.min(50, Math.max(15, target));
             var inc = Math.ceil(target / steps) || 1;
             var step = 0;
             var timer = setInterval(function () {
@@ -198,13 +208,13 @@
               numEl.classList.remove('flash');
               void numEl.offsetWidth;
               numEl.classList.add('flash');
-            }, 40);
+            }, 35);
           })
           .catch(function () {
             // API 失败时回退到 localStorage
-            var key = 'visit_count';
-            var count = parseInt(localStorage.getItem(key) || '0', 10) + 1;
-            localStorage.setItem(key, String(count));
+            var lkey = 'visit_count';
+            var count = parseInt(localStorage.getItem(lkey) || '0', 10) + 1;
+            localStorage.setItem(lkey, String(count));
             labelEl.textContent = '// 检测到生命体信号（离线模式）';
             descEl.textContent = '你是第 ' + count + ' 位到访的碳基生物 🐧';
             numEl.textContent = count;
