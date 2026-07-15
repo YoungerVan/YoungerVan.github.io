@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=9" />
+  <link rel="stylesheet" href="style.css?v=10" />
   <!-- 代码高亮主题 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css" />
   <!-- MathJax 数学公式 -->
@@ -37,6 +37,12 @@
       <p style="color:#888">加载中…</p>
     </div>
   </article>
+
+  <!-- 浮动目录 -->
+  <aside id="toc" class="toc">
+    <div class="toc-title">目录</div>
+    <nav id="toc-list" class="toc-list"></nav>
+  </aside>
 
   <!-- Markdown 解析 & 代码高亮 -->
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
@@ -89,12 +95,53 @@
           if (window.MathJax && window.MathJax.typesetPromise) {
             window.MathJax.typesetPromise([contentEl]);
           }
+
+          // ===== 生成目录（TOC）=====
+          buildTOC();
         })
         .catch((err) => {
           contentEl.innerHTML = '<p style="color:#888">加载失败：' + err.message +
             '。<br/>提示：本地直接双击打开 html 会因浏览器安全策略无法 fetch，请用本地服务器或部署到 GitHub Pages 后访问。</p>';
         });
     })();
+
+    // ===== 目录生成 + 滚动高亮 =====
+    function buildTOC() {
+      const headings = document.querySelectorAll('#content h1, #content h2');
+      const tocList = document.getElementById('toc-list');
+      if (!headings.length || !tocList) return;
+
+      // 给每个标题加 id，并生成目录项
+      headings.forEach((h, i) => {
+        if (!h.id) h.id = 'heading-' + i;
+        const a = document.createElement('a');
+        a.href = '#' + h.id;
+        a.textContent = h.textContent.replace(/^#+\s*/, '');
+        a.className = 'toc-link toc-' + h.tagName.toLowerCase();
+        a.dataset.target = h.id;
+        tocList.appendChild(a);
+      });
+
+      // 滚动时高亮当前章节
+      const tocLinks = tocList.querySelectorAll('.toc-link');
+      let ticking = false;
+      function highlight() {
+        const scrollY = window.scrollY + 120;
+        let currentIdx = 0;
+        headings.forEach((h, i) => {
+          if (h.offsetTop <= scrollY) currentIdx = i;
+        });
+        tocLinks.forEach((l, i) => l.classList.toggle('active', i === currentIdx));
+        ticking = false;
+      }
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(highlight);
+          ticking = true;
+        }
+      });
+      highlight();
+    }
   </script>
 </body>
 </html>

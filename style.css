@@ -419,4 +419,54 @@ body {
   .sidebar { position: static; text-align: center; }
   .avatar { margin-left: auto; margin-right: auto; }
   .contact { align-items: center; }
+  .toc { display: none; } /* 窄屏隐藏目录 */
 }
+
+/* ===== 浮动目录（TOC） ===== */
+.toc {
+  position: fixed;
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(-50%);
+  width: 200px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 1rem 0.8rem 1rem 1rem;
+  border-left: 1px solid var(--line);
+  z-index: 50;
+}
+.toc-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin-bottom: 0.8rem;
+}
+.toc-list { display: flex; flex-direction: column; gap: 0.35rem; }
+.toc-link {
+  display: block;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  padding: 0.2rem 0;
+  border-left: 2px solid transparent;
+  padding-left: 0.7rem;
+  margin-left: -0.7rem;
+  transition: color 0.2s, border-color 0.2s;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.toc-link:hover { color: #fff; }
+.toc-link.toc-h2 { padding-left: 1.4rem; margin-left: -1.4rem; font-size: 0.75rem; }
+.toc-link.active {
+  color: #fff;
+  border-left-color: #fff;
+}
+/* 目录滚动条 */
+.toc::-webkit-scrollbar { width: 3px; }
+.toc::-webkit-scrollbar-track { background: transparent; }
+.toc::-webkit-scrollbar-thumb { background: var(--line); border-radius: 2px; }
