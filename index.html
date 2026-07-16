@@ -181,15 +181,22 @@
 
             labelEl.textContent = '// 检测到生命体信号';
 
-            // 趣味文案
+            // 随机选取一句幽默文案
             var descs = [
-              '你是第 ' + count + ' 位到访的碳基生物 🐧',
-              '第 ' + count + ' 次了，你比我的 GPU 还勤奋 🔥',
-              '第 ' + count + ' 次！说吧，这次又遇到什么 bug 了 🐛',
-              '第 ' + count + ' 次，我都要怀疑你是不是个爬虫脚本了 🤖',
-              '第 ' + count + ' 次！你赢了，这里没别人了，就咱俩 🫂',
+              '本站累计被翻牌 ' + count + ' 次，感谢每一位路过的人类 🐧',
+              '已经有 ' + count + ' 个灵魂误入此地，没有一个是自愿的 😏',
+              '恭喜！你是第 ' + count + ' 个看到这句话的人，奖品是一句废话 🎉',
+              '本页被访问了 ' + count + ' 次，其中 ' + Math.floor(count * 0.9) + ' 次是我自己刷新的 🫠',
+              count + ' 次访问，我写的 bug 终于有人来看了 🐛',
+              ' статистика: ' + count + ' 次访问。看不懂？因为我也看不懂 🤖',
+              '如果每次访问给我一块钱，我现在已经有 ' + count + ' 块了 💰（并没有）',
+              '第 ' + count + ' 次加载成功！CPU 表示情绪稳定，显卡在瑟瑟发抖 🖥️',
+              '这个数字 ' + count + ' 看起来很小，但写它的头发掉了很多 💇‍♂️',
+              '欢迎第 ' + count + ' 位访客！座位随便坐，饮料自取，反正都没有 🪑',
+              count + ' 次访问，' + count + ' 个故事，大多是我编的 📖',
+              '你以为 ' + count + ' 是个随机数？不，这是命运 🎲（其实真的是随机的）',
             ];
-            descEl.textContent = descs[Math.min(descs.length - 1, Math.floor((count - 1) / 5))] || descs[descs.length - 1];
+            descEl.textContent = descs[Math.floor(Math.random() * descs.length)];
 
             // 数字翻滚动画
             var display = 0;
