@@ -77,7 +77,7 @@
       <!-- 自我描述（带特效） -->
       <div class="block intro-block">
         <div class="intro-text">
-          <p class="intro-hi">Hi, I'm <span class="shine">Fan&nbsp;Hongyang</span> 👋</p>
+          <p class="intro-hi">Ciao! I'm <span class="shine">Fan&nbsp;Hongyang</span> 👋</p>
           <p>
             一名 <span class="hl-word">AI 算法工程师</span>，目前就职于
             <span class="hl-word">腾讯</span>，硕士毕业于
@@ -186,7 +186,7 @@
               '本站累计被翻牌 ' + count + ' 次，感谢每一位路过的人类 🐧',
               '已经有 ' + count + ' 个灵魂误入此地，没有一个是自愿的 😏',
               '恭喜！你是第 ' + count + ' 个看到这句话的人，奖品是一句废话 🎉',
-              '本页被访问了 ' + count + ' 次，其中 ' + Math.floor(count * 0.9) + ' 次是我自己刷新的 🫠',
+              '本页被访问了 ' + count + ' 次，其中 ' + Math.floor(count * 0.8) + ' 次是我自己刷新的 🫠',
               count + ' 次访问，我写的 bug 终于有人来看了 🐛',
               ' статистика: ' + count + ' 次访问。看不懂？因为我也看不懂 🤖',
               '如果每次访问给我一块钱，我现在已经有 ' + count + ' 块了 💰（并没有）',
@@ -194,7 +194,7 @@
               '这个数字 ' + count + ' 看起来很小，但写它的头发掉了很多 💇‍♂️',
               '欢迎第 ' + count + ' 位访客！座位随便坐，饮料自取，反正都没有 🪑',
               count + ' 次访问，' + count + ' 个故事，大多是我编的 📖',
-              '你以为 ' + count + ' 是个随机数？不，这是命运 🎲（其实真的是随机的）',
+              '你以为 ' + count + ' 是个随机数？不，这是命运 🎲',
             ];
             descEl.textContent = descs[Math.floor(Math.random() * descs.length)];
 
@@ -223,7 +223,7 @@
             var count = parseInt(localStorage.getItem(lkey) || '0', 10) + 1;
             localStorage.setItem(lkey, String(count));
             labelEl.textContent = '// 检测到生命体信号（离线模式）';
-            descEl.textContent = '你是第 ' + count + ' 位到访的碳基生物 🐧';
+            descEl.textContent = '你是第 ' + count + ' 位到访的碳基生物';
             numEl.textContent = count;
           });
       })();
